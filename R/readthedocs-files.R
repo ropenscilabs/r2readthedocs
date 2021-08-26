@@ -16,6 +16,17 @@ readthedocs_yaml <- function (path = ".") {
     out <- file.path (path, ".readthedocs.yaml")
     file.copy (f, out)
 
+    rb <- file.path (path, ".Rbuildignore")
+    x <- NULL
+    if (file.exists (rb))
+        x <- brio::read_lines (rb)
+    if (!any (grepl ("^\\.readthedocs\\.yaml", x))) {
+
+        x <- c (x,
+                ".readthedocs.yaml")
+        brio::write_lines (x, rb)
+    }
+
     return (out)
 }
 
