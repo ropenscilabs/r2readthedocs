@@ -7,11 +7,6 @@ readthedocs <- function (path) {
 
     path <- convert_path (path)
 
-    convert_man (path)
-    convert_readme (path)
-    convert_vignettes (path)
-    rignore_amend (path)
-
     readthedocs_yaml (path)
 
     exdir <- system.file ("extdata", package = "r2readthedocs")
@@ -25,5 +20,50 @@ readthedocs <- function (path) {
         readthedocs_file (path, f)
     }
 
+    convert_man (path)
+    convert_readme (path)
+    convert_vignettes (path)
+    rignore_amend (path)
+
+    extend_index_rst (path)
+
     invisible (TRUE)
+}
+
+extend_index_rst <- function (path) {
+
+    index <- file.path (path, "docs", "index.rst")
+    if (!file.exists (index))
+        stop ("File [", index, "] not found")
+
+    x <- c (brio::read_lines (index),
+            add_index_section (path, "vignettes"),
+            add_index_section (path, "functions"))
+
+    brio::write_lines (x, index)
+}
+
+add_index_section <- function (path, type = "functions") {
+
+    the_dir <- file.path (path, "docs", type)
+    if (!dir.exists (the_dir))
+        return (NULL)
+
+    type_cap <- type
+    substring (type_cap, 1, 1) <- toupper (substring (type_cap, 1, 1))
+
+    x <- c ("",
+            "",
+            ".. toctree::",
+            "   :maxdepth: 1",
+            paste0 ("   :caption: ", type_cap),
+            "")
+
+    for (f in list.files (the_dir)) {
+
+        x <- c (x,
+                paste0 ("   ", type, .Platform$file.sep, f))
+    }
+
+    return (x)
 }
