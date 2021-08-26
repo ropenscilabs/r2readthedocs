@@ -1,6 +1,6 @@
-Package: readthedocs
+Package: r2readthedocs
 Title: Convert R package documentation to a 'readthedocs' website
-Version: 0.0.0.020
+Version: 0.0.0.021
 Authors@R: 
     person(given = "Mark",
            family = "Padgham",
@@ -8,8 +8,8 @@ Authors@R:
            email = "mark.padgham@email.com")
 Description: Convert R package documentation to a 'readthedocs' website.
 License: GPL-3
-URL: https://github.com/ropenscilabs/readthedocs
-BugReports: https://github.com/ropenscilabs/readthedocs/issues
+URL: https://github.com/ropenscilabs/r2readthedocs
+BugReports: https://github.com/ropenscilabs/r2readthedocs/issues
 Imports:
     brio,
     here,

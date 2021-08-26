@@ -1,4 +1,4 @@
 library(testthat)
-library(readthedocs)
+library(r2readthedocs)
 
-test_check("readthedocs")
+test_check("r2readthedocs")
