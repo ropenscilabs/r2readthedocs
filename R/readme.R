@@ -17,11 +17,22 @@ convert_readme <- function (path = ".") {
     }
 
     dest <- file.path (path, "docs", paste0 (pkg_name (path), ".md"))
-    chk <- file.copy (orig, dest)
+    chk <- file.copy (orig, dest, overwrite = TRUE)
 
     x <- move_hex (brio::read_lines (dest), path)
 
-    x <- c (brio::read_lines (dest),
+    pos <- grep ("```eval_rst", x)
+    if (length (pos) > 0L) {
+
+        x <- x [1:(pos - 1)]
+        hdr <- grep ("^## Functions$", x)
+        if (length (hdr) > 0L) {
+
+            x <- x [1:(hdr - 1)]
+        }
+    }
+
+    x <- c (x,
             "",
             "## Functions",
             "",

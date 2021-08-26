@@ -1,6 +1,6 @@
 Package: readthedocs
 Title: Convert R package documentation to a 'readthedocs' website
-Version: 0.0.0.014
+Version: 0.0.0.015
 Authors@R: 
     person(given = "Mark",
            family = "Padgham",
