@@ -122,6 +122,21 @@ write_man <- function (d) {
     brio::write_lines (x, file.path (d, "test_fn.Rd"))
 }
 
+write_vignettes <- function (d) {
+
+    d <- file.path (d, "vignettes")
+    if (!dir.exists (d))
+        chk <- dir.create (d, recursive = TRUE)
+
+    x <- c ("# a vignette",
+            "",
+            "with some text")
+    v <- file.path (d, "vignette.Rmd")
+    brio::write_lines (x, v)
+
+    return (v)
+}
+
 make_dummy_pkg <- function (base_dir = tempdir (), pkg_name = "demo") {
 
     d <- make_pkg_path (base_dir, pkg_name)
@@ -131,6 +146,7 @@ make_dummy_pkg <- function (base_dir = tempdir (), pkg_name = "demo") {
     write_readme (d, pkg_name)
     write_namespace (d)
     write_man (d)
+    write_vignettes (d)
 
     return (d)
 }
