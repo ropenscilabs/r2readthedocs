@@ -10,10 +10,4 @@ Some text here
 
 .. toctree::
    :maxdepth: 1
-   :caption: Main Contents:
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Vignettes
-
-   vignette
+   :caption: Introduction:
