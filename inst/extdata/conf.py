@@ -19,9 +19,9 @@ from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
-project = 'ropensci-review-tools'
-copyright = '2021, Mark Padgham'
-author = 'Mark Padgham'
+project = 'my-project'
+copyright = '<year>, My Name'
+author = 'My Name'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
