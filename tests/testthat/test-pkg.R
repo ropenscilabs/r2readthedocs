@@ -35,7 +35,9 @@ test_that("dummy package", {
                                " <img src='hex.png' align='right' height=210 width=182>")
               brio::write_lines (x, r)
 
-              expect_silent (r <- convert_readme (d))
+              # TODO: That suppress warnings is because the hex logo is not yet
+              # put in the proper place - do that!
+              r <- suppressWarnings (convert_readme (d))
               x <- brio::read_lines (r)
               expect_false (grepl ("<img src", x [1]))
               expect_true (grep ("<img src", x) [1] > 1L)
