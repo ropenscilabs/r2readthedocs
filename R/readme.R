@@ -16,7 +16,7 @@ convert_readme <- function (path = ".") {
         stop (msg)
     }
 
-    dest <- file.path (path, "docs", paste0 (pkg_name (), ".md"))
+    dest <- file.path (path, "docs", paste0 (pkg_name (path), ".md"))
     chk <- file.copy (orig, dest)
 
     x <- move_hex (brio::read_lines (dest), path)
