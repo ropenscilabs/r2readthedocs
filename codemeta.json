@@ -8,7 +8,7 @@
   "description": "Convert R package documentation to a 'readthedocs' website.",
   "name": "readthedocs: Convert R package documentation to a 'readthedocs' website",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.0.006",
+  "version": "0.0.0.007",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
