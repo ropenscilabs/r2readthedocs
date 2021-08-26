@@ -49,31 +49,12 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
 
-      - name: Extra deps
-        run: |
-          sudo apt-get install -y git global libgit2-dev
-
-      - name: ctags latest
-        if: runner.os == 'Linux'
-        run: |
-          git clone https://github.com/universal-ctags/ctags.git
-          cd ctags
-          ./autogen.sh
-          ./configure --prefix=/usr
-          make
-          sudo make install
-
       - name: Install dependencies
         run: |
           install.packages(c("remotes"))
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("covr")
         shell: Rscript {0}
-
-        #- name: Configure Git user
-        #run: |
-        #  git config --global user.email "ghau@example.com"
-        #  git config --global user.name "GitHub Actions User"
 
       - name: Test coverage
         run: covr::codecov()
