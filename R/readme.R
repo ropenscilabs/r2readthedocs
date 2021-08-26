@@ -90,7 +90,7 @@ move_hex <- function (x, path) {
         }
         fig_dest <- normalizePath (fig_dest)
 
-        fig_rel <- gsub (file.path (d, "docs"), "", fig_dest)
+        fig_rel <- gsub (file.path (path, "docs"), "", fig_dest)
         fig_rel <- gsub (paste0 ("^", .Platform$file.sep), "", fig_rel)
         tmp <- gsub (fig_src_name, fig_rel, x [1])
         tmp <- strsplit (tmp, "<img src") [[1]]
