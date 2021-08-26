@@ -76,17 +76,23 @@ move_hex <- function (x, path) {
         fig_src <- gsub ("\"|\'", "", fig_src)
         fig_src_name <- strsplit (fig_src, .Platform$file.sep) [[1]]
         fig_src_name <- utils::tail (fig_src_name, 1L)
+        fig_src_name <- strsplit (fig_src_name, "\\s") [[1]] [1]
 
-        dir_dest <- file.path (path, "docs", "_static", pkg_name (path))
+        static_dir <- file.path (path, "docs", "_static")
+        if (!dir.exists (static_dir))
+            dir.create (static_dir, recursive = TRUE)
+        dir_dest <- file.path (static_dir, pkg_name (path))
         fig_dest <- file.path (dir_dest, fig_src_name)
         if (!file.exists (fig_dest)) {
             if (!dir.exists (dir_dest))
                 dir.create (dir_dest, recursive = TRUE)
             chk <- file.copy (file.path (path, pkg_name (path), fig_src), fig_dest)
         }
+        fig_dest <- normalizePath (fig_dest)
 
-        fig_rel <- gsub (paste0 ("docs", .Platform$file.sep), "",  fig_dest)
-        tmp <- gsub (fig_src, fig_rel, x [1])
+        fig_rel <- gsub (file.path (d, "docs"), "", fig_dest)
+        fig_rel <- gsub (paste0 ("^", .Platform$file.sep), "", fig_rel)
+        tmp <- gsub (fig_src_name, fig_rel, x [1])
         tmp <- strsplit (tmp, "<img src") [[1]]
         x <- c (tmp [1],
                 "",
