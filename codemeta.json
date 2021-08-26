@@ -1,0 +1,69 @@
+{
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
+  "@type": "SoftwareSourceCode",
+  "identifier": "readthedocs",
+  "description": "Convert R package documentation to a 'readthedocs' website.",
+  "name": "readthedocs: Convert R package documentation to a 'readthedocs' website",
+  "license": "https://spdx.org/licenses/GPL-3.0",
+  "version": "0.0.0.9001",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Mark",
+      "familyName": "Padgham",
+      "email": "mark.padgham@email.com"
+    }
+  ],
+  "contributor": {},
+  "copyrightHolder": {},
+  "funder": {},
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Mark",
+      "familyName": "Padgham",
+      "email": "mark.padgham@email.com"
+    }
+  ],
+  "softwareSuggestions": [],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "brio",
+      "name": "brio",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=brio"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "here",
+      "name": "here",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=here"
+    }
+  ],
+  "codeRepository": "https://github.com/ropenscilabs/readthedocs",
+  "readme": "https://github.com/ropenscilabs/readthedocs/blob/main/README.md",
+  "fileSize": "1.832KB",
+  "contIntegration": ["https://github.com/ropenscilabs/readthedocs/actions", "https://codecov.io/gh/ropenscilabs/readthedocs"],
+  "developmentStatus": "https://www.repostatus.org/#concept"
+}
