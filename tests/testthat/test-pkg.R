@@ -40,5 +40,9 @@ test_that("dummy package", {
               expect_false (grepl ("<img src", x [1]))
               expect_true (grep ("<img src", x) [1] > 1L)
 
+              expect_false (dir.exists (file.path (d, "docs", "vignettes")))
+              expect_output (convert_vignettes (d))
+              expect_true (dir.exists (file.path (d, "docs", "vignettes")))
+
               unlink (d, recursive = TRUE)
 })
