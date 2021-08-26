@@ -131,7 +131,6 @@ make_dummy_pkg <- function (base_dir = tempdir (), pkg_name = "demo") {
     write_readme (d, pkg_name)
     write_namespace (d)
     write_man (d)
-    rignore_amend (d)
 
     return (d)
 }
