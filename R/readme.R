@@ -1,7 +1,8 @@
 
 #' Convert main readme to `readthedocs` file.
 #'
-#' @return Nothing
+#' @return Name of 'README' file in the `docs` folder, after renaming to the
+#' package name.
 #' @noRd
 convert_readme <- function (path = ".") {
 
@@ -53,6 +54,8 @@ convert_readme <- function (path = ".") {
     x <- c (x, "```")
 
     brio::write_lines (x, dest)
+
+    return (dest)
 }
 
 #' Separate HTML image from main title
