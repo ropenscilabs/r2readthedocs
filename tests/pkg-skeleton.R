@@ -122,13 +122,15 @@ write_man <- function (d) {
     brio::write_lines (x, file.path (d, "test_fn.Rd"))
 }
 
-base_dir = tempdir ()
-pkg_name = "demo"
+make_dummy_pkg <- function (base_dir = tempdir (), pkg_name = "demo") {
 
-d <- make_pkg_path (base_dir, pkg_name)
+    d <- make_pkg_path (base_dir, pkg_name)
 
-write_desc (d, pkg_name)
-write_r_fn (d, pkg_name)
-write_readme (d, pkg_name)
-write_namespace (d)
-write_man (d)
+    write_desc (d, pkg_name)
+    write_r_fn (d, pkg_name)
+    write_readme (d, pkg_name)
+    write_namespace (d)
+    write_man (d)
+
+    return (d)
+}
