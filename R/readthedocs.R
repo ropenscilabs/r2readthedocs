@@ -37,6 +37,10 @@ extend_index_rst <- function (path) {
         stop ("File [", index, "] not found")
 
     x <- c (brio::read_lines (index),
+            "",
+            "   demo",
+            "",
+            "",
             add_index_section (path, "vignettes"),
             add_index_section (path, "functions"))
 
