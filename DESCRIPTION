@@ -1,6 +1,6 @@
 Package: r2readthedocs
 Title: Convert R package documentation to a 'readthedocs' website
-Version: 0.0.0.036
+Version: 0.0.0.037
 Authors@R: 
     person(given = "Mark",
            family = "Padgham",
@@ -13,7 +13,8 @@ BugReports: https://github.com/ropenscilabs/r2readthedocs/issues
 Imports:
     brio,
     here,
-    Rd2md
+    Rd2md,
+    withr
 Suggests: 
     rmarkdown,
     testthat (>= 3.0.0)
