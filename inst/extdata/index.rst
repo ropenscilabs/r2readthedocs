@@ -55,5 +55,3 @@ incorporated. The following are examples of ``rst`` "admonitions":
 .. toctree::
    :maxdepth: 1
    :caption: Introduction:
-
-   demo
