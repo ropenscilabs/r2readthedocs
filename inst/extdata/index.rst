@@ -19,7 +19,8 @@ package demonstrates some of the features, with links to additional ``rst``
 documentation to help you get started. The definitive argument for the benefits
 of ``rst`` over markdown is the `official language format documentation
 <https://www.python.org/dev/peps/pep-0287/>`_, which starts with a very clear
-explanation of the benefits.
+explanation of the `benefits
+<https://www.python.org/dev/peps/pep-0287/#benefits>`_.
 
 Examples
 --------
