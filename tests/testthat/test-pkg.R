@@ -1,12 +1,10 @@
 
-source ("../pkg-skeleton.R")
-
 # explicit steps through each sub-fn of main r2readthedocs() fn:
 test_that("readthedocs sub-functions", {
 
               pkg_name <- paste0 (sample (c (letters, LETTERS), size = 8),
                                   collapse = "")
-              path <- make_dummy_pkg (pkg_name = pkg_name)
+              path <- rtd_dummy_pkg (pkg_name = pkg_name)
               expect_true (dir.exists (path))
 
               expect_false (dir.exists (file.path (path, "docs")))
@@ -58,7 +56,7 @@ test_that ("readthedocs & make functions", {
 
               pkg_name <- paste0 (sample (c (letters, LETTERS), size = 8),
                                   collapse = "")
-              path <- make_dummy_pkg (pkg_name = pkg_name)
+              path <- rtd_dummy_pkg (pkg_name = pkg_name)
               expect_true (dir.exists (path))
 
               expect_false (dir.exists (file.path (path, "docs")))
