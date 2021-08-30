@@ -22,11 +22,12 @@ r2readthedocs <- function (path, open = TRUE) {
     }
 
     convert_man (path)
-    convert_readme (path)
+    readme <- convert_readme (path)
+    readme <- utils::tail (strsplit (readme, .Platform$file.sep) [[1]], 1L)
     convert_vignettes (path)
     rignore_amend (path)
 
-    extend_index_rst (path)
+    extend_index_rst (path, readme)
 
     rtd_build (path)
 
@@ -36,7 +37,11 @@ r2readthedocs <- function (path, open = TRUE) {
     invisible (TRUE)
 }
 
-extend_index_rst <- function (path) {
+#' Extend the index_rst file by adding readme, vignettes, and function index
+#' @param path Path to root of package directory
+#' @param readme name of package; used to rename 'README'.
+#' @noRd
+extend_index_rst <- function (path, readme) {
 
     index <- file.path (path, "docs", "index.rst")
     if (!file.exists (index))
@@ -44,7 +49,7 @@ extend_index_rst <- function (path) {
 
     x <- c (brio::read_lines (index),
             "",
-            "   demo",
+            paste0 ("   ", readme),
             "",
             "",
             add_index_section (path, "vignettes"),
