@@ -8,7 +8,8 @@ rtd_build <- function (path = ".") {
 
     path <- file.path (convert_path (path), "docs")
     if (!file.exists (path))
-        stop ("path must have a 'docs' directory; try running 'r2readthedocs' first")
+        stop ("path must have a 'docs' directory; ",
+              "try running 'r2readthedocs' first")
 
     withr::with_dir (path,
                      system2 ("make", "html"))
