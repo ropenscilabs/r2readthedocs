@@ -8,7 +8,7 @@
   "description": "Convert R package documentation to a 'readthedocs' website.",
   "name": "r2readthedocs: Convert R package documentation to a 'readthedocs' website",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.0.35",
+  "version": "0.0.0.36",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -101,7 +101,7 @@
   ],
   "codeRepository": "https://github.com/ropenscilabs/r2readthedocs",
   "readme": "https://github.com/ropenscilabs/r2readthedocs/blob/main/README.md",
-  "fileSize": "35.326KB",
+  "fileSize": "35.565KB",
   "contIntegration": ["https://github.com/ropenscilabs/r2readthedocs/actions", "https://codecov.io/gh/ropenscilabs/r2readthedocs"],
   "developmentStatus": "https://www.repostatus.org/#concept",
   "issueTracker": "https://github.com/ropenscilabs/r2readthedocs/issues"

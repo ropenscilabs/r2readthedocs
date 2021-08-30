@@ -1,9 +1,10 @@
 #' Convert package documentation to `readthedocs` format
 #'
 #' @param path Path to local R package with documentation to be converted
+#' @param open If `TRUE`, open the documentation site in default browser.
 #' @return TRUE (invisibly) if documentation successfully converted.
 #' @export
-r2readthedocs <- function (path) {
+r2readthedocs <- function (path, open = TRUE) {
 
     path <- convert_path (path)
 
@@ -26,6 +27,11 @@ r2readthedocs <- function (path) {
     rignore_amend (path)
 
     extend_index_rst (path)
+
+    rtd_build (path)
+
+    if (open)
+        rtd_open (path)
 
     invisible (TRUE)
 }

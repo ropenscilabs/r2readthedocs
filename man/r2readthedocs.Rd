@@ -4,10 +4,12 @@
 \alias{r2readthedocs}
 \title{Convert package documentation to \code{readthedocs} format}
 \usage{
-r2readthedocs(path)
+r2readthedocs(path, open = TRUE)
 }
 \arguments{
 \item{path}{Path to local R package with documentation to be converted}
+
+\item{open}{If \code{TRUE}, open the documentation site in default browser.}
 }
 \value{
 TRUE (invisibly) if documentation successfully converted.
