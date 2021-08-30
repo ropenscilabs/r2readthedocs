@@ -4,7 +4,7 @@
 \name{r2readthedocs-package}
 \alias{r2readthedocs-package}
 \alias{_PACKAGE}
-\title{r2readthedocs: Convert R package documentation to a 'readthedocs' website}
+\title{r2readthedocs: Convert R Package Documentation to a 'readthedocs' Website}
 \description{
 Convert R package documentation to a 'readthedocs' website.
 }
