@@ -4,10 +4,13 @@
 \alias{rtd_clean}
 \title{Clean the RTD \verb{_build} directory}
 \usage{
-rtd_clean(path = ".")
+rtd_clean(path = ".", full = FALSE)
 }
 \arguments{
 \item{path}{Path to local R package with documentation to be converted}
+
+\item{full}{If \code{TRUE}, also clean R package files, including vignettes and
+help files. Use \link{r2readthedocs} to re-generate these.}
 }
 \description{
 Clean the RTD \verb{_build} directory
