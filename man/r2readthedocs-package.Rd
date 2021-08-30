@@ -2,8 +2,8 @@
 % Please edit documentation in R/r2readthedocs-package.R
 \docType{package}
 \name{r2readthedocs-package}
-\alias{r2readthedocs}
 \alias{r2readthedocs-package}
+\alias{_PACKAGE}
 \title{r2readthedocs: Convert R package documentation to a 'readthedocs' website}
 \description{
 Convert R package documentation to a 'readthedocs' website.
