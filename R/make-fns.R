@@ -22,13 +22,13 @@ rtd_build <- function (path = ".") {
 rtd_clean <- function (path = ".") {
 
     path <- convert_path (path)
-    path_build <- file.path (path, "docs", "_build")
+    path_docs <- file.path (path, "docs")
 
     ret <- NULL
 
-    if (dir.exists (path_build)) {
+    if (dir.exists (path_docs)) {
 
-        ret <- withr::with_dir (path_build,
+        ret <- withr::with_dir (path_docs,
                                 system2 ("make", args = "clean"))
     }
 
