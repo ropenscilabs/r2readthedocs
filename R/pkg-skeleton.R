@@ -137,7 +137,15 @@ write_vignettes <- function (d) {
     return (v)
 }
 
-make_dummy_pkg <- function (base_dir = tempdir (), pkg_name = "demo") {
+#' Make a dummy package for testing 'r2readthedocs' functions
+#'
+#' @param base_dir Base directory in which package is to be constructed (as a
+#' sub-directory)
+#' @param pkg_name Name of package, which will become a sub-directory of
+#' `base_dir`.
+#' @return Path to root directory of resultant package
+#' @export
+rtd_dummy_pkg <- function (base_dir = tempdir (), pkg_name = "demo") {
 
     d <- make_pkg_path (base_dir, pkg_name)
 

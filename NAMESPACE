@@ -3,4 +3,5 @@
 export(r2readthedocs)
 export(rtd_build)
 export(rtd_clean)
+export(rtd_dummy_pkg)
 export(rtd_open)
