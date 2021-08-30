@@ -29,6 +29,7 @@ r2readthedocs <- function (path, open = TRUE) {
 
     extend_index_rst (path, readme)
 
+    rtd_clean (path)
     rtd_build (path)
 
     if (open)
