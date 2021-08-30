@@ -82,6 +82,9 @@ test_that ("readthedocs & make functions", {
                                    recursive = TRUE,
                                    all.files = TRUE)
               expect_length (flist, 0L)
+              # But sub-dirs of "docs" should still be there:
+              expect_true (dir.exists (file.path (path, "docs", "functions")))
+              expect_true (dir.exists (file.path (path, "docs", "vignettes")))
 
               chk <- rtd_build (path)
               expect_true (dir.exists (file.path (path,
@@ -93,4 +96,10 @@ test_that ("readthedocs & make functions", {
                                                    "_build",
                                                    "html",
                                                    "index.html")))
+
+              chk <- rtd_clean (path, full = TRUE)
+              expect_true (dir.exists (file.path (path, "docs")))
+              # sub-dirs of "docs" should now be gone:
+              expect_false (dir.exists (file.path (path, "docs", "functions")))
+              expect_false (dir.exists (file.path (path, "docs", "vignettes")))
 })
