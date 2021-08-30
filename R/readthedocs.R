@@ -3,7 +3,7 @@
 #' @param path Path to local R package with documentation to be converted
 #' @return TRUE (invisibly) if documentation successfully converted.
 #' @export
-readthedocs <- function (path) {
+r2readthedocs <- function (path) {
 
     path <- convert_path (path)
 
