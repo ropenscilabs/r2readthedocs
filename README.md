@@ -16,19 +16,19 @@ Convert R package documentation to a
 
 Two compelling reasons:
 
-1.  [‘readthedocs’](https://readthedocs.org/) is based on a markup
+1.  R packages are not necessarily self-contained, yet much of the
+    surrounding infrastructure, from CRAN to automatic documentation
+    generators such as [`pkgdown`](https://pkgdown.r-lib.org/), presume
+    a package to be a self-contained unit. Any projects requiring
+    greater flexibility must employ alternative documentation systems,
+    for which [‘readthedocs’](https://readthedocs.org/) (RTD) offers an
+    extremely simple and highly flexible way to embed or enhance package
+    documentation within or alongside almost anything else.
+2.  [‘readthedocs’](https://readthedocs.org/) is based on a markup
     language called [‘reStructuredText’
     (`.rst`)](https://www.python.org/dev/peps/pep-0287/#benefits) which
     is more flexible and powerful than the `markdown` generally used in
     R packages.
-2.  The structure of an R package documentation website generated with
-    existing tools such as [`pkgdown`](https://pkgdown.r-lib.org/) is
-    generally fixed and difficult to modify. The entire structure of a
-    [‘readthedocs’](https://readthedocs.org/) site can be very easily
-    modified through changes to the underlying `.rst` files, including
-    easy addition of documentation beyond the internal package-specific
-    documentation, such as descriptions of use cases, of relevant data
-    or analyses external to the package, or anything at all.
 
 ## How?
 
