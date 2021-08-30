@@ -35,10 +35,16 @@ Two compelling reasons:
 For those unfamiliar with [‘readthedocs’](https://readthedocs.org/)
 (RTD), we recommend using the `rtd_dummy_pkg()` function provided with
 this package, which generates a “skeleton” of a package which can be
-used to generate an RTD site. Simply run the following two lines:
+used to generate an RTD site.
 
 ``` r
 path <- rtd_dummy_pkg ()
+```
+
+Then either using that `path` to the dummy package, or a local path to a
+package of your choice, generate an RTD website by running:
+
+``` r
 r2readthedocs (path)
 ```
 
