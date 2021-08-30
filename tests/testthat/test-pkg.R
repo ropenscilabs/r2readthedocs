@@ -23,7 +23,8 @@ test_that("readthedocs sub-functions", {
               expect_true (dir.exists (file.path (path, "docs", "functions")))
 
               flist <- list.files (file.path (path, "docs"))
-              expect_false (any (grepl ("\\.md$", flist))) # no readme.md (-> random.md)
+              # no readme.md (-> random.md):
+              expect_false (any (grepl ("\\.md$", flist)))
 
               expect_silent (r <- convert_readme (path))
               flist <- list.files (file.path (path, "docs"))
@@ -34,8 +35,9 @@ test_that("readthedocs sub-functions", {
               chk <- file.copy ("../hex.png", file.path (path, "hex.png"))
               r <- file.path (path, "README.md")
               x <- brio::read_lines (r)
-              x [1] <- paste0 (x [1], 
-                               " <img src='hex.png' align='right' height=210 width=182>")
+              x [1] <- paste0 (x [1],
+                               " <img src='hex.png' align='right' ",
+                               "height=210 width=182>")
               brio::write_lines (x, r)
 
               # TODO: That suppress warnings is because the hex logo is not yet
@@ -65,8 +67,15 @@ test_that ("readthedocs & make functions", {
 
               expect_true (dir.exists (file.path (path, "docs")))
               expect_true (dir.exists (file.path (path, "docs", "_build")))
-              expect_true (dir.exists (file.path (path, "docs", "_build", "html")))
-              expect_true (file.exists (file.path (path, "docs", "_build", "html", "index.html")))
+              expect_true (dir.exists (file.path (path,
+                                                  "docs",
+                                                  "_build",
+                                                  "html")))
+              expect_true (file.exists (file.path (path,
+                                                   "docs",
+                                                   "_build",
+                                                   "html",
+                                                   "index.html")))
 
               chk <- rtd_clean (path)
               expect_true (dir.exists (file.path (path, "docs")))
@@ -77,6 +86,13 @@ test_that ("readthedocs & make functions", {
               expect_length (flist, 0L)
 
               chk <- rtd_build (path)
-              expect_true (dir.exists (file.path (path, "docs", "_build", "html")))
-              expect_true (file.exists (file.path (path, "docs", "_build", "html", "index.html")))
+              expect_true (dir.exists (file.path (path,
+                                                  "docs",
+                                                  "_build",
+                                                  "html")))
+              expect_true (file.exists (file.path (path,
+                                                   "docs",
+                                                   "_build",
+                                                   "html",
+                                                   "index.html")))
 })
