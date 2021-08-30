@@ -52,7 +52,7 @@ test_that("readthedocs sub-functions", {
               unlink (path, recursive = TRUE)
 })
 
-test_that ("readthedocs function", {
+test_that ("readthedocs & make functions", {
 
               pkg_name <- paste0 (sample (c (letters, LETTERS), size = 8),
                                   collapse = "")
@@ -65,6 +65,18 @@ test_that ("readthedocs function", {
 
               expect_true (dir.exists (file.path (path, "docs")))
               expect_true (dir.exists (file.path (path, "docs", "_build")))
+              expect_true (dir.exists (file.path (path, "docs", "_build", "html")))
+              expect_true (file.exists (file.path (path, "docs", "_build", "html", "index.html")))
+
+              chk <- rtd_clean (path)
+              expect_true (dir.exists (file.path (path, "docs")))
+              # `_build` directory should be empty:
+              flist <- list.files (file.path (path, "docs", "_build"),
+                                   recursive = TRUE,
+                                   all.files = TRUE)
+              expect_length (flist, 0L)
+
+              chk <- rtd_build (path)
               expect_true (dir.exists (file.path (path, "docs", "_build", "html")))
               expect_true (file.exists (file.path (path, "docs", "_build", "html", "index.html")))
 })
