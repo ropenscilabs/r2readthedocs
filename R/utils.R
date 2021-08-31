@@ -19,6 +19,22 @@ pkg_name <- function (path = ".") {
     return (unname (d [1, "Package"]))
 }
 
+pkg_authors <- function (path = ".") {
+
+    path <- convert_path (path)
+    d <- file.path (path, "DESCRIPTION")
+    if (!file.exists (d))
+        stop ("'DESCRIPTION' file not found")
+
+    aut <- desc::desc_get_authors (path)
+    roles <- regmatches (aut, gregexpr ("\\[.*\\]", aut))
+    aut <- aut [grep ("aut", roles)]
+    aut <- gsub ("\\[.*\\]|<.*>", "", aut)
+    aut <- gsub ("^\\s+|\\s+$", "", aut)
+
+    return (aut)
+}
+
 rignore_amend <- function (path = ".") {
 
     path <- convert_path (path)
