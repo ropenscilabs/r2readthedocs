@@ -22,37 +22,6 @@ convert_readme <- function (path = ".") {
 
     x <- move_hex (brio::read_lines (dest), path)
 
-    pos <- grep ("```eval_rst", x)
-    if (length (pos) > 0L) {
-
-        x <- x [1:(pos - 1)]
-        hdr <- grep ("^## Functions$", x)
-        if (length (hdr) > 0L) {
-
-            x <- x [1:(hdr - 1)]
-        }
-    }
-
-    x <- c (x,
-            "",
-            "## Functions",
-            "",
-            "```eval_rst",
-            ".. toctree::",
-            "   :maxdepth: 1",
-            "")
-
-    fn_files <- list.files (file.path (path, "docs", "functions"),
-                            full.names = TRUE,
-                            pattern = "\\.md$")
-    ptn <- paste0 (.Platform$file.sep, "docs", .Platform$file.sep)
-    for (f in fn_files) {
-
-        fn_path <- strsplit (f, ptn) [[1]] [2]
-        x <- c (x, paste0 ("   ", fn_path))
-    }
-    x <- c (x, "```")
-
     brio::write_lines (x, dest)
 
     return (dest)
