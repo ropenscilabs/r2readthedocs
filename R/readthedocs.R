@@ -29,6 +29,10 @@ r2readthedocs <- function (path, open = TRUE) {
 
     extend_index_rst (path, readme)
 
+    static_dir <- file.path (path, "docs", "_static")
+    if (!dir.exists (static_dir))
+        dir.create (static_dir)
+
     rtd_clean (path)
     rtd_build (path)
 
