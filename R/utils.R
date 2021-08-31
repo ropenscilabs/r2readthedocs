@@ -44,9 +44,16 @@ rignore_amend <- function (path = ".") {
     if (file.exists (rb))
         x <- brio::read_lines (rb)
 
+    update <- FALSE
     if (!any (grepl ("^\\^docs(\\/?)", x))) {
-
+        update <- TRUE
         x <- c (x, "^docs/")
-        brio::write_lines (x, rb)
     }
+    if (!any (grepl ("readthedocs\\.yaml", x))) {
+        update <- TRUE
+        x <- c (x, "^\.readthedocs.yaml")
+    }
+
+    if (update)
+        brio::write_lines (x, rb)
 }
