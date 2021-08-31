@@ -38,8 +38,26 @@ rtd_clean <- function (path = ".", full = FALSE) {
 
             dirs <- list.dirs (path_docs, recursive = FALSE)
             dirs <- dirs [which (!grepl ("\\_build$", dirs))]
-            for (d in dirs)
-                chk <- unlink (d, recursive = TRUE)
+
+            # match to man and vignettes directories
+            r_dirs <- c ("man", "vignettes")
+            r_files <- lapply (r_dirs, function (i)
+                               list.files (file.path (path, i),
+                                           recursive = TRUE))
+            r_files <- grep ("\\.Rd$|\\.Rmd$|\\.md$",
+                             unlist (r_files),
+                             value = TRUE)
+            r_files <- vapply (strsplit (r_files, "\\."),
+                               function (i) i [1L],
+                               character (1))
+            r_files <- paste0 (r_files, collapse = "|")
+
+            # Then only unlink corresponding auto-generated dirs, while
+            # retaining all others
+            for (d in dirs) {
+                if (all (grep (r_files, list.files (d))))
+                    chk <- unlink (d, recursive = TRUE)
+            }
         }
     }
 
