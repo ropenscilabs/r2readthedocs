@@ -28,6 +28,7 @@ r2readthedocs <- function (path, open = TRUE) {
     rignore_amend (path)
 
     extend_index_rst (path, readme)
+    edit_conf_py (path)
 
     static_dir <- file.path (path, "docs", "_static")
     if (!dir.exists (static_dir))
@@ -86,4 +87,31 @@ add_index_section <- function (path, type = "functions") {
     }
 
     return (x)
+}
+
+edit_conf_py <- function (path) {
+
+    path_docs <- file.path (path, "docs")
+    conf_py <- file.path (path_docs, "conf.py")
+    if (!file.exists (conf_py))
+        stop ("No conf.py file found at [", path_docs, "]")
+
+    x <- brio::read_lines (conf_py)
+
+    i <- grep ("project = \'my-project\'", x)
+    x [i] <- paste0 ("project = '", pkg_name (path), "'")
+
+    i <- grep ("copyright = \'<year>", x)
+    x [i] <- paste0 ("copyright = '",
+                     format (Sys.Date (), "%Y"),
+                     ", ",
+                     paste0 (pkg_authors (path), collapse = ", "),
+                     "'")
+
+    i <- grep ("author = \'My Name\'", x)
+    x [i] <- paste0 ("author = '",
+                     paste0 (pkg_authors (path), collapse = ", "),
+                     "'")
+
+    brio::write_lines (x, conf_py)
 }
