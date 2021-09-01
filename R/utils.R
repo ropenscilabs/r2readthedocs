@@ -51,7 +51,7 @@ rignore_amend <- function (path = ".") {
     }
     if (!any (grepl ("readthedocs\\.yaml", x))) {
         update <- TRUE
-        x <- c (x, "^\.readthedocs.yaml")
+        x <- c (x, "^\\.readthedocs.yaml")
     }
 
     if (update)
