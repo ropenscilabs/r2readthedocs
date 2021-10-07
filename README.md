@@ -26,9 +26,9 @@ Two compelling reasons:
     documentation within or alongside almost anything else.
 2.  [‘readthedocs’](https://readthedocs.org/) is based on a markup
     language called [‘reStructuredText’
-    (`.rst`)](https://www.python.org/dev/peps/pep-0287/#benefits) which
-    is more flexible and powerful than the `markdown` generally used in
-    R packages.
+    (`.rst`)](https://docutils.sourceforge.io/docs/user/rst/quickref.html),
+    which is more flexible and powerful than the `markdown` generally
+    used in R packages.
 
 ## How?
 
