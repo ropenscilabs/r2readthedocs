@@ -1,20 +1,19 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "r2readthedocs",
   "description": "Convert R package documentation to a 'readthedocs' website.",
   "name": "r2readthedocs: Convert R Package Documentation to a 'readthedocs' Website",
+  "codeRepository": "https://github.com/ropenscilabs/r2readthedocs",
+  "issueTracker": "https://github.com/ropenscilabs/r2readthedocs/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.0.069",
+  "version": "0.0.0.70",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "author": [
     {
       "@type": "Person",
@@ -23,9 +22,6 @@
       "email": "mark.padgham@email.com"
     }
   ],
-  "contributor": {},
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -61,8 +57,8 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "brio",
       "name": "brio",
@@ -74,7 +70,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=brio"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "desc",
       "name": "desc",
@@ -86,7 +82,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=desc"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "here",
       "name": "here",
@@ -98,7 +94,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=here"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "Rd2md",
       "name": "Rd2md",
@@ -110,7 +106,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Rd2md"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
@@ -121,15 +117,11 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
-    }
-  ],
-  "codeRepository": "https://github.com/ropenscilabs/r2readthedocs",
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "47.769KB",
   "readme": "https://github.com/ropenscilabs/r2readthedocs/blob/main/README.md",
-  "fileSize": "43.684KB",
-  "contIntegration": [
-    "https://github.com/ropenscilabs/r2readthedocs/actions",
-    "https://codecov.io/gh/ropenscilabs/r2readthedocs"
-  ],
-  "developmentStatus": "https://www.repostatus.org/#concept",
-  "issueTracker": "https://github.com/ropenscilabs/r2readthedocs/issues"
+  "contIntegration": ["https://github.com/ropenscilabs/r2readthedocs/actions", "https://codecov.io/gh/ropenscilabs/r2readthedocs"],
+  "developmentStatus": "https://www.repostatus.org/#concept"
 }

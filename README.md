@@ -28,7 +28,12 @@ Two compelling reasons:
     language called [‘reStructuredText’
     (`.rst`)](https://docutils.sourceforge.io/docs/user/rst/quickref.html),
     which is more flexible and powerful than the `markdown` generally
-    used in R packages.
+    used in R packages. Alternatively, yet another form called
+    [‘Markedly Structured Text’
+    (MyST)](https://myst-parser.readthedocs.io/en/latest/index.html#)
+    can be used instead. The possibility of readily swapping between
+    different markdown parsing systems provide much greater flexibility
+    than available in convention `RMarkdown` parsers.
 
 ## How?
 
@@ -52,14 +57,19 @@ The RTD website will be automatically opened in your default browser.
 Most of the content is automatically generated straight from the package
 documentation, as for a [`pkgdown`](https://pkgdown.r-lib.org/) website.
 The primary difference you’ll immediate notice is that the front page is
-not the package’s `README.md` document. This is because, which
-`markdown` pages can be readily inserted into `.rst` pages, this is not
-possible for the main page, which must be encoded entirely in `.rst`
-form. The front page of any site generated with the `r2readthedocs()`
-function will retain this general form, which can then be readily
-adapted as desired. The main file controlling the site’s appearance is
-`index.rst`, located in a sub-directory of the local `path` named
-`"docs"` - in R terms, at `file.path(path, "docs", "index.rst")`.
+not the package’s `README.md` document. There are two reasons for this:
+
+1.  While `markdown` pages can be readily inserted into `.rst` pages,
+    this is not possible for the main page, which must be encoded
+    entirely in `.rst` form.
+2.  This package may easily be used to document several packages, or a
+    project of which an actual R package is just one component. Leaving
+    the main page largely unstructured enables ready adaptation to
+    almost any configuration.
+
+The main file controlling the site’s appearance is `index.rst`, located
+in a sub-directory of the local `path` named `"docs"` - in R terms, at
+`file.path(path, "docs", "index.rst")`.
 
 ## Further Information
 
