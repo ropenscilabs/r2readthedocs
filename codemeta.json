@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/ropenscilabs/r2readthedocs",
   "issueTracker": "https://github.com/ropenscilabs/r2readthedocs/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.0.071",
+  "version": "0.0.0.72",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.1.3 (2022-03-10)",
   "author": [
     {
       "@type": "Person",
@@ -118,13 +118,10 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "47.769KB",
+  "fileSize": "47.771KB",
   "readme": "https://github.com/ropenscilabs/r2readthedocs/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/ropenscilabs/r2readthedocs/actions",
-    "https://codecov.io/gh/ropenscilabs/r2readthedocs"
-  ],
+  "contIntegration": ["https://github.com/ropenscilabs/r2readthedocs/actions", "https://codecov.io/gh/ropenscilabs/r2readthedocs"],
   "developmentStatus": "https://www.repostatus.org/#concept"
 }
