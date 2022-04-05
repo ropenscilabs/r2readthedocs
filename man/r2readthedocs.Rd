@@ -4,7 +4,7 @@
 \alias{r2readthedocs}
 \title{Convert package documentation to \code{readthedocs} format}
 \usage{
-r2readthedocs(path, open = TRUE)
+r2readthedocs(path = here::here(), open = TRUE)
 }
 \arguments{
 \item{path}{Path to local R package with documentation to be converted}

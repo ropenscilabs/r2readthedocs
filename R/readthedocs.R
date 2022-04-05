@@ -4,7 +4,7 @@
 #' @param open If `TRUE`, open the documentation site in default browser.
 #' @return TRUE (invisibly) if documentation successfully converted.
 #' @export
-r2readthedocs <- function (path, open = TRUE) {
+r2readthedocs <- function (path = here::here (), open = TRUE) {
 
     path <- convert_path (path)
 
