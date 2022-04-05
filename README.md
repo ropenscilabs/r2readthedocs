@@ -36,6 +36,30 @@ Two compelling reasons:
     different markdown parsing systems provide much greater flexibility
     than available in convention `RMarkdown` parsers.
 
+## Installation
+
+`readthedocs` requires the two python packages, `sphinx` and
+`myst_parser`. These can be installed via your usual python installation
+method, for example,
+
+``` python
+pip install sphinx myst_parser
+```
+
+This R package can then be installed by running one of the following
+lines:
+
+``` r
+remotes::install_github ("ropenscilabs/r2readthedocs")
+pak::pkg_install ("ropenscilabs/r2readthedocs")
+```
+
+The package can then loaded for use with
+
+``` r
+library (r2readthedocs)
+```
+
 ## How?
 
 For those unfamiliar with [‘readthedocs’](https://readthedocs.org/)
