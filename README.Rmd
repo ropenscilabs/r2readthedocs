@@ -44,10 +44,11 @@ Two compelling reasons:
 
 ## Installation
 
-`readthedocs` requires the two python packages, `sphinx` and `myst_parser`. These can be installed via your usual python installation method, for example,
+`readthedocs` requires three python packages which can be installed via your
+usual python installation method, for example,
 
 ```{python, eval = FALSE}
-pip install sphinx myst_parser
+pip install sphinx myst_parser sphinx_rtd_theme
 ```
 
 This R package can then be installed by running one of the following lines:
