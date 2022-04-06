@@ -22,16 +22,15 @@ add_pkg_deps <- function (path = here::here ()) {
 
         # make index for that pkg:
         rd_titles <- tools::file_path_sans_ext (nms)
-        myst_targets <- 
-            pkg_index <- c (
-                            paste0 ("# ", i),
-                            "",
-                            paste0 ("- [",
-                                    rd_titles,
-                                    "](",
-                                    paste0 (i, "_", nms),
-                                    ")")
-            )
+        pkg_index <- c (
+                        paste0 ("# ", i),
+                        "",
+                        paste0 ("- [",
+                                rd_titles,
+                                "](",
+                                paste0 (i, "_", nms),
+                                ")")
+        )
 
         brio::write_lines (pkg_index,
                            file.path (dep_dir, paste0 (i, ".md")))
