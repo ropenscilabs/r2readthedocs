@@ -115,6 +115,16 @@ add_dep_fns <- function (path, pkg, rd) {
         mdout <- file.path (pkg_dir,
                             paste0 (tools::file_path_sans_ext (n),
                                     ".md"))
+
+        # finally, remove local markdown hyperlinks automatically inserted by
+        # `Rd2md`:
+        g <- gregexpr ("\\[.*\\]\\(.*\\)", md)
+        links <- unique (unlist (regmatches (md, g)))
+        link_content <- gsub ("^\\[|\\]\\(.*$", "", links)
+        for (l in seq_along (links)) {
+            md <- gsub (links [l], link_content [l], md, fixed = TRUE)
+        }
+
         brio::write_lines (md, mdout)
     }
 
