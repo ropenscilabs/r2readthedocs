@@ -11,8 +11,9 @@ add_pkg_deps <- function (path = here::here ()) {
     if (!dir.exists (dep_dir)) {
         dir.create (dep_dir)
     }
-    fout <- tempfile (fileext = ".md")
+
     for (i in imps) {
+
         pkg_dir <- file.path (dep_dir, i)
         if (!dir.exists (pkg_dir)) {
             dir.create (pkg_dir)
@@ -20,20 +21,34 @@ add_pkg_deps <- function (path = here::here ()) {
         rd <- tools::Rd_db (i)
         nms <- names (rd)
 
-        # make index for that pkg:
+        # make index.rst for that pkg:
         rd_titles <- tools::file_path_sans_ext (nms)
         pkg_index <- c (
-                        paste0 ("# ", i),
+                        i,
+                        "==========",
                         "",
-                        paste0 ("- [",
+                        ".. toctree::",
+                        "   :maxdepth: 1",
+                        "   :caption: Functions",
+                        "",
+                        paste0 ("   ",
+                                i,
+                                "/",
                                 rd_titles,
-                                "](",
-                                paste0 (i, "_", nms),
-                                ")")
+                                ".md"),
+                        ""
         )
 
-        brio::write_lines (pkg_index,
-                           file.path (dep_dir, paste0 (i, ".md")))
+        index_file <- file.path (dep_dir, "index.rst")
+        index_contents <- NULL
+        if (file.exists (index_file)) {
+            index_contents <- c (brio::read_lines (index_file),
+                                 "",
+                                 "-----",
+                                 "")
+        }
+        brio::write_lines (c (index_contents, pkg_index),
+                           index_file)
 
         add_dep_fns (path, i, rd)
     }
@@ -73,18 +88,13 @@ add_deps_to_index_rst <- function (path, dep_pkgs) {
         index <- index [-index_end]
     }
 
-    index <- c (index,
-                "",
-                ".. toctree::",
-                "   :maxdepth: 1",
-                "   :caption: Dependencies",
-                "")
-    for (d in dep_pkgs) {
-        index <- c (index,
-                    paste0 ("   dependencies/", d, ".md"))
-    }
-
     c (index,
+       "",
+       ".. toctree::",
+       "   :maxdepth: 1",
+       "   :caption: Dependencies",
+       "",
+       "   dependencies/index",
        "",
        end_txt)
 }
@@ -102,10 +112,11 @@ add_dep_fns <- function (path, pkg, rd) {
     for (n in names (rd)) {
 
         out <- Rd2md::Rd2markdown (rd [[n]], outfile = fout)
+        out <- NULL # rm unused variable note
         md <- brio::read_lines (fout)
-        md <- gsub ("^\\#\\#\\#\\s", "#### ", md)
-        md <- gsub ("^\\#\\#\\s", "### ", md)
-        md <- gsub ("^\\#\\s", "## ", md)
+        #md <- gsub ("^\\#\\#\\#\\s", "#### ", md)
+        #md <- gsub ("^\\#\\#\\s", "### ", md)
+        #md <- gsub ("^\\#\\s", "## ", md)
 
         # insert MyST link target:
         md <- c (paste0 ("(", pkg, "_", n, ")="),
