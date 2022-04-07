@@ -10,6 +10,13 @@ r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
 
     path <- convert_path (path)
 
+    if (dir.exists (file.path (path, "docs"))) {
+        stop ("'docs' directory already exists; please remove ",
+              "before calling this function, or use ",
+              "'rtd_build()' to rebuild current site",
+              call. = FALSE)
+    }
+
     readthedocs_yaml (path)
 
     exdir <- system.file ("extdata", package = "r2readthedocs")
@@ -37,8 +44,9 @@ r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
         dir.create (static_dir)
 
     if (dev) {
+        rm_pkg_deps (path) # to enable clean updates
         add_pkg_deps (path)
-    } else if (dir.exists (dep_dir)) {
+    } else if (dir.exists (file.path (path, "docs", "dependencies"))) {
         rm_pkg_deps (path)
     }
 

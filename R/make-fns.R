@@ -4,14 +4,21 @@
 #'
 #' @inheritParams r2readthedocs
 #' @export
-rtd_build <- function (path = ".") {
+rtd_build <- function (path = ".", dev = FALSE) {
 
-    path <- file.path (convert_path (path), "docs")
-    if (!file.exists (path))
+    docs_path <- file.path (convert_path (path), "docs")
+    if (!file.exists (docs_path))
         stop ("path must have a 'docs' directory; ",
               "try running 'r2readthedocs' first")
 
-    withr::with_dir (path,
+    if (dev) {
+        rm_pkg_deps (path) # to enable clean updates
+        add_pkg_deps (path)
+    } else if (dir.exists (file.path (docs_path, "dependencies"))) {
+        rm_pkg_deps (path)
+    }
+
+    withr::with_dir (docs_path,
                      system2 ("make", "html"))
 }
 

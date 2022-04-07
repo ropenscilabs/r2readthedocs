@@ -21,7 +21,7 @@ add_pkg_deps <- function (path = here::here ()) {
         rd <- tools::Rd_db (i)
         nms <- names (rd)
 
-        # make index.rst for that pkg:
+        # add pkg toc to main index.rst:
         rd_titles <- tools::file_path_sans_ext (nms)
         pkg_index <- c (
                         i,
@@ -151,7 +151,7 @@ rm_pkg_deps <- function (path = here::here ()) {
         return ()
     }
 
-    unlink (dep_dir)
+    unlink (dep_dir, recursive = TRUE)
     
     f <- file.path (path, "docs", "index.rst")
     if (!file.exists (f)) {
@@ -161,6 +161,9 @@ rm_pkg_deps <- function (path = here::here ()) {
 
     toc <- grep ("^\\.\\.\\stoctree\\:\\:$", index)
     deps_index <- grep ("^\\s+dependencies\\/", index)
+    if (length (deps_index) == 0L) {
+        return ()
+    }
     toc <- max (toc [which (toc < min (deps_index))])
 
     index <- index [-seq (toc, max (deps_index))]
