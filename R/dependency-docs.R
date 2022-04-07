@@ -20,8 +20,10 @@ add_pkg_deps <- function (path = here::here ()) {
         }
 
         rd <- tools::Rd_db (i)
-        add_pkg_to_deps_index_rst (path, i, rd)
-
+        vignettes <- add_pkg_to_deps_index_rst (path, i, rd)
+        if (nrow (vignettes) > 0L) {
+            compile_vignettes (path, i, vignettes)
+        }
         add_dep_fns (path, i, rd)
     }
 
@@ -49,6 +51,7 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
         paste0 (".. admonition:: ", desc$Title),
         "",
         paste0 ("    ", desc_txt),
+        "",
         paste0 ("Version: ", desc$Version),
         "",
         "Authors:",
@@ -58,22 +61,50 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
         desc$URL
     )
 
-    # Then add pkg toc:
+    # Then add pkg fns toc:
     rd_titles <- tools::file_path_sans_ext (nms)
     pkg_index <- c (
-                    pkg_index,
-                    "",
-                    ".. toctree::",
-                    "   :maxdepth: 1",
-                    "   :caption: Functions",
-                    "",
-                    paste0 ("   ",
-                            pkg,
-                            "/",
-                            rd_titles,
-                            ".md"),
-                    ""
+        pkg_index,
+        "",
+        ".. toctree::",
+        "   :maxdepth: 1",
+        "   :caption: Functions",
+        "",
+        paste0 ("   ",
+                pkg,
+                "/",
+                rd_titles,
+                ".md"),
+        ""
     )
+
+    # And vignettes:
+    v <- vignette (package = pkg)
+    items <- data.frame (v$results)$Item
+    v_files <- vapply (items, function (i) {
+        v_i <- vignette (i, package = pkg)
+        file.path (v_i$Dir, "doc", v_i$File)
+    }, character (1))
+    v$results <- v$results [grep ("\\.Rmd$", v_files), ]
+    if (is.null (dim (v$results))) {
+        v$results <- t (v$results)
+    }
+
+    if (nrow (v$results) > 0L) {
+        pkg_index <- c (
+            pkg_index,
+            ".. toctree::",
+            "   :maxdepth: 1",
+            "   :caption: Vignettes",
+            "",
+            paste0 ("   ",
+                    pkg,
+                    "/",
+                    data.frame (v$results)$Item,
+                    ".md"),
+            ""
+        )
+    }
 
     dep_dir <- file.path (path, "docs", "dependencies")
     index_file <- file.path (dep_dir, "index.rst")
@@ -86,6 +117,41 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
     }
     brio::write_lines (c (index_contents, pkg_index),
                        index_file)
+
+    return (data.frame (v$results))
+}
+
+compile_vignettes <- function (path, pkg, vignettes) {
+
+    fmt <- rmarkdown::md_document (variant = "gfm")
+    titles <- gsub ("\\s\\(source,\\shtml\\)", "", vignettes$Title)
+
+    for (i in seq (nrow (vignettes))) {
+
+        v_file <- file.path (vignettes$LibPath [i],
+                             vignettes$Package [i],
+                             "doc",
+                             paste0 (vignettes$Item [i], ".Rmd"))
+        if (!file.exists (v_file)) {
+            next
+        }
+
+        ftmp <- file.path (tempdir (), basename (v_file))
+        file.copy (v_file, ftmp)
+        f_md <- rmarkdown::render (ftmp, output_format = fmt, quiet = TRUE)
+        contents <- c (
+            paste0 ("# ", titles [i]),
+            "",
+            brio::read_lines (f_md))
+        f_md_here <- file.path (path,
+                                "docs",
+                                "dependencies",
+                                pkg,
+                                basename (f_md))
+        brio::write_lines (contents, f_md_here)
+
+        file.remove (c (f_md, ftmp))
+    }
 }
 
 add_deps_to_main_index_rst <- function (path, dep_pkgs) {
@@ -141,8 +207,8 @@ add_dep_fns <- function (path, pkg, rd) {
 
     for (n in names (rd)) {
 
-        out <- Rd2md::Rd2markdown (rd [[n]], outfile = fout)
         out <- NULL # rm unused variable note
+        out <- Rd2md::Rd2markdown (rd [[n]], outfile = fout)
         md <- brio::read_lines (fout)
 
         # insert MyST link target:
@@ -179,7 +245,7 @@ rm_pkg_deps <- function (path = here::here ()) {
     }
 
     unlink (dep_dir, recursive = TRUE)
-    
+
     f <- file.path (path, "docs", "index.rst")
     if (!file.exists (f)) {
         return ()
