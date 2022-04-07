@@ -34,11 +34,34 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
 
     nms <- names (rd)
 
-    # add pkg toc to main index.rst:
+    # Add pkg DESC contents to main index.rst:
+    desc <- utils::packageDescription (pkg)
+    auts <- eval (parse (text = desc$`Authors@R`))
+    auts <- gsub ("<.*>|\\(.*\\)", "", auts)
+    auts <- gsub ("^\\s+|\\s+$", "", auts)
+    desc_txt <- gsub ("\\n", "", desc$Description)
+    desc_txt <- gsub ("\\s+", " ", desc_txt)
+
+    pkg_index <- c (
+        pkg,
+        "========",
+        "",
+        paste0 (".. admonition:: ", desc$Title),
+        "",
+        paste0 ("    ", desc_txt),
+        paste0 ("Version: ", desc$Version),
+        "",
+        "Authors:",
+        "",
+        paste0 ("- ", auts),
+        "",
+        desc$URL
+    )
+
+    # Then add pkg toc:
     rd_titles <- tools::file_path_sans_ext (nms)
     pkg_index <- c (
-                    pkg,
-                    "==========",
+                    pkg_index,
                     "",
                     ".. toctree::",
                     "   :maxdepth: 1",
