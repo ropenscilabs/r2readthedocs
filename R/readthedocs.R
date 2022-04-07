@@ -51,10 +51,11 @@ r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
     }
 
     rtd_clean (path)
-    rtd_build (path)
+    rtd_build (path, dev = dev)
 
-    if (open)
+    if (open) {
         rtd_open (path)
+    }
 
     invisible (TRUE)
 }
