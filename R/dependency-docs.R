@@ -18,37 +18,9 @@ add_pkg_deps <- function (path = here::here ()) {
         if (!dir.exists (pkg_dir)) {
             dir.create (pkg_dir)
         }
+
         rd <- tools::Rd_db (i)
-        nms <- names (rd)
-
-        # add pkg toc to main index.rst:
-        rd_titles <- tools::file_path_sans_ext (nms)
-        pkg_index <- c (
-                        i,
-                        "==========",
-                        "",
-                        ".. toctree::",
-                        "   :maxdepth: 1",
-                        "   :caption: Functions",
-                        "",
-                        paste0 ("   ",
-                                i,
-                                "/",
-                                rd_titles,
-                                ".md"),
-                        ""
-        )
-
-        index_file <- file.path (dep_dir, "index.rst")
-        index_contents <- NULL
-        if (file.exists (index_file)) {
-            index_contents <- c (brio::read_lines (index_file),
-                                 "",
-                                 "-----",
-                                 "")
-        }
-        brio::write_lines (c (index_contents, pkg_index),
-                           index_file)
+        add_pkg_to_deps_index_rst (path, i, rd)
 
         add_dep_fns (path, i, rd)
     }
@@ -56,6 +28,41 @@ add_pkg_deps <- function (path = here::here ()) {
     index <- add_deps_to_main_index_rst (path, imps)
     brio::write_lines (index,
                        file.path (path, "docs", "index.rst"))
+}
+
+add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
+
+    nms <- names (rd)
+
+    # add pkg toc to main index.rst:
+    rd_titles <- tools::file_path_sans_ext (nms)
+    pkg_index <- c (
+                    pkg,
+                    "==========",
+                    "",
+                    ".. toctree::",
+                    "   :maxdepth: 1",
+                    "   :caption: Functions",
+                    "",
+                    paste0 ("   ",
+                            pkg,
+                            "/",
+                            rd_titles,
+                            ".md"),
+                    ""
+    )
+
+    dep_dir <- file.path (path, "docs", "dependencies")
+    index_file <- file.path (dep_dir, "index.rst")
+    index_contents <- NULL
+    if (file.exists (index_file)) {
+        index_contents <- c (brio::read_lines (index_file),
+                             "",
+                             "-----",
+                             "")
+    }
+    brio::write_lines (c (index_contents, pkg_index),
+                       index_file)
 }
 
 add_deps_to_main_index_rst <- function (path, dep_pkgs) {
