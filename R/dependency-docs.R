@@ -5,6 +5,11 @@ add_pkg_deps <- function (path = here::here ()) {
 
     desc <- data.frame (read.dcf (file.path (path, "DESCRIPTION")))
     imps <- gsub ("\\n", "", strsplit (desc$Imports, ",") [[1]])
+    imps <- gsub ("\\s.*$", "", imps)
+
+    if (length (imps) == 0L) {
+        return ()
+    }
 
     dep_dir <- normalizePath (file.path (path, "docs", "dependencies"),
                               mustWork = FALSE)
@@ -38,7 +43,11 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
 
     # Add pkg DESC contents to main index.rst:
     desc <- utils::packageDescription (pkg)
-    auts <- eval (parse (text = desc$`Authors@R`))
+    if ("Authors@R" %in% names (desc)) {
+        auts <- eval (parse (text = desc$`Authors@R`))
+    } else {
+        auts <- desc$Author
+    }
     auts <- gsub ("<.*>|\\(.*\\)", "", auts)
     auts <- gsub ("^\\s+|\\s+$", "", auts)
     desc_txt <- gsub ("\\n", "", desc$Description)
