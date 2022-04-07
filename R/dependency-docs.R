@@ -53,12 +53,12 @@ add_pkg_deps <- function (path = here::here ()) {
         add_dep_fns (path, i, rd)
     }
 
-    index <- add_deps_to_index_rst (path, imps)
+    index <- add_deps_to_main_index_rst (path, imps)
     brio::write_lines (index,
                        file.path (path, "docs", "index.rst"))
 }
 
-add_deps_to_index_rst <- function (path, dep_pkgs) {
+add_deps_to_main_index_rst <- function (path, dep_pkgs) {
 
     f <- file.path (path, "docs", "index.rst")
     if (!file.exists (f)) {
