@@ -38,6 +38,8 @@ r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
 
     if (dev) {
         add_pkg_deps (path)
+    } else if (dir.exists (dep_dir)) {
+        rm_pkg_deps (path)
     }
 
     rtd_clean (path)

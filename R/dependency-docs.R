@@ -141,3 +141,29 @@ add_dep_fns <- function (path, pkg, rd) {
 
     file.remove (fout)
 }
+
+#' Remove documentation of dependency packages
+#' @noRd
+rm_pkg_deps <- function (path = here::here ()) {
+
+    dep_dir <- file.path (path, "docs", "dependencies")
+    if (!dir.exists (dep_dir)) {
+        return ()
+    }
+
+    unlink (dep_dir)
+    
+    f <- file.path (path, "docs", "index.rst")
+    if (!file.exists (f)) {
+        return ()
+    }
+    index <- brio::read_lines (f)
+
+    toc <- grep ("^\\.\\.\\stoctree\\:\\:$", index)
+    deps_index <- grep ("^\\s+dependencies\\/", index)
+    toc <- max (toc [which (toc < min (deps_index))])
+
+    index <- index [-seq (toc, max (deps_index))]
+
+    brio::write_lines (index, f)
+}
