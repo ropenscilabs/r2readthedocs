@@ -4,10 +4,13 @@
 \alias{r2readthedocs}
 \title{Convert package documentation to \code{readthedocs} format}
 \usage{
-r2readthedocs(path = here::here(), open = TRUE)
+r2readthedocs(path = here::here(), dev = FALSE, open = TRUE)
 }
 \arguments{
 \item{path}{Path to local R package with documentation to be converted}
+
+\item{dev}{If \code{TRUE}, include function documentation of all dependency
+packages in site.}
 
 \item{open}{If \code{TRUE}, open the documentation site in default browser.}
 }

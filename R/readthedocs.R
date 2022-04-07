@@ -1,12 +1,21 @@
 #' Convert package documentation to `readthedocs` format
 #'
 #' @param path Path to local R package with documentation to be converted
+#' @param dev If `TRUE`, include function documentation of all dependency
+#' packages in site.
 #' @param open If `TRUE`, open the documentation site in default browser.
 #' @return TRUE (invisibly) if documentation successfully converted.
 #' @export
-r2readthedocs <- function (path = here::here (), open = TRUE) {
+r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
 
     path <- convert_path (path)
+
+    if (dir.exists (file.path (path, "docs"))) {
+        stop ("'docs' directory already exists; please remove ",
+              "before calling this function, or use ",
+              "'rtd_build()' to rebuild current site",
+              call. = FALSE)
+    }
 
     readthedocs_yaml (path)
 
@@ -34,11 +43,19 @@ r2readthedocs <- function (path = here::here (), open = TRUE) {
     if (!dir.exists (static_dir))
         dir.create (static_dir)
 
-    rtd_clean (path)
-    rtd_build (path)
+    if (dev) {
+        rm_pkg_deps (path) # to enable clean updates
+        add_pkg_deps (path)
+    } else if (dir.exists (file.path (path, "docs", "dependencies"))) {
+        rm_pkg_deps (path)
+    }
 
-    if (open)
+    rtd_clean (path)
+    rtd_build (path, dev = dev)
+
+    if (open) {
         rtd_open (path)
+    }
 
     invisible (TRUE)
 }
