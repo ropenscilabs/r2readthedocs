@@ -28,6 +28,19 @@ convert_vignettes <- function (path = ".") {
             requireNamespace ("rmarkdown")
             fmt <- rmarkdown::md_document (variant = "gfm")
             rmarkdown::render (f, output_format = fmt, output_file = f_md)
+
+            x_md <- brio::read_lines (f_md)
+            # Insert title if not rendered:
+            if (!any (grepl ("^#\\s", x_md [1:3]))) {
+                x_rmd <- brio::read_lines (f)
+                x_title <- gsub ("^title\\:\\s?", "",
+                                 grep ("^title\\:", x_rmd, value = TRUE))
+                x_title <- gsub ("\\\"", "", x_title)
+                x_md <- c (paste0 ("# ", x_title),
+                           "",
+                           x_md)
+                brio::write_lines (x_md, f_md)
+            }
         }
 
         f_short <- utils::tail (strsplit (f_md, .Platform$file.sep) [[1]], 1L)
