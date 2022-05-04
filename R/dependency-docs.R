@@ -158,10 +158,18 @@ compile_vignettes <- function (path, pkg, vignettes) {
             brio::write_lines (v_i, ftmp)
         }
 
-        f_md <- rmarkdown::render (ftmp,
-                                   output_format = fmt,
-                                   envir = new.env (),
-                                   quiet = TRUE)
+        f_md <- tryCatch (
+            rmarkdown::render (ftmp,
+                               output_format = fmt,
+                               envir = new.env (),
+                               quiet = TRUE),
+            error = function (e) NULL)
+
+        file.remove (ftmp)
+
+        if (is.null (f_md)) {
+            next
+        }
 
         contents <- c (
             paste0 ("# ", titles [i]),
@@ -174,7 +182,7 @@ compile_vignettes <- function (path, pkg, vignettes) {
                                 basename (f_md))
         brio::write_lines (contents, f_md_here)
 
-        file.remove (c (f_md, ftmp))
+        file.remove (f_md)
     }
 }
 
