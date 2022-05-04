@@ -158,7 +158,10 @@ compile_vignettes <- function (path, pkg, vignettes) {
             brio::write_lines (v_i, ftmp)
         }
 
-        f_md <- rmarkdown::render (ftmp, output_format = fmt, quiet = TRUE)
+        f_md <- rmarkdown::render (ftmp,
+                                   output_format = fmt,
+                                   envir = new.env (),
+                                   quiet = TRUE)
 
         contents <- c (
             paste0 ("# ", titles [i]),
