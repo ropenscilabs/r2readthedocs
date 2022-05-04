@@ -147,7 +147,19 @@ compile_vignettes <- function (path, pkg, vignettes) {
 
         ftmp <- file.path (tempdir (), basename (v_file))
         file.copy (v_file, ftmp)
+
+        # bibliography files are not retained in installed pkgs, causing pandoc
+        # to fail. Work-around is to simply remove the bib line, rendering
+        # vignette without references.
+        v_i <- brio::read_lines (ftmp)
+        bib_line <- grep ("^bibliography\\:", v_i)
+        if (length (bib_line) > 0L) {
+            v_i <- v_i [-bib_line]
+            brio::write_lines (v_i, ftmp)
+        }
+
         f_md <- rmarkdown::render (ftmp, output_format = fmt, quiet = TRUE)
+
         contents <- c (
             paste0 ("# ", titles [i]),
             "",
