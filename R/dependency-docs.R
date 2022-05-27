@@ -88,10 +88,10 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
     )
 
     # And vignettes:
-    v <- vignette (package = pkg)
+    v <- utils::vignette (package = pkg)
     items <- data.frame (v$results)$Item
     v_files <- vapply (items, function (i) {
-        v_i <- vignette (i, package = pkg)
+        v_i <- utils::vignette (i, package = pkg)
         file.path (v_i$Dir, "doc", v_i$File)
     }, character (1))
     v$results <- v$results [grep ("\\.Rmd$", v_files), ]
