@@ -2,6 +2,8 @@
 test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
     identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
 
+skip_on_os ("windows") # pandoc < required version
+
 # explicit steps through each sub-fn of main r2readthedocs() fn:
 test_that("readthedocs sub-functions", {
 
