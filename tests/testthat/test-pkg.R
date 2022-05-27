@@ -1,4 +1,7 @@
 
+test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
+    identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
+
 # explicit steps through each sub-fn of main r2readthedocs() fn:
 test_that("readthedocs sub-functions", {
 
@@ -51,6 +54,9 @@ test_that("readthedocs sub-functions", {
 
               unlink (path, recursive = TRUE)
 })
+
+# these tests don't work on r-univ machines because pandoc < required version
+skip_if (!test_all)
 
 test_that ("readthedocs & make functions", {
 
