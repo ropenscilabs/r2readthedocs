@@ -1,4 +1,3 @@
-
 #' Move `.readthedocs.yaml` file to local root folder.
 #'
 #' This needs a separate function because this file is copied to the root,
@@ -10,20 +9,24 @@ readthedocs_yaml <- function (path = ".") {
     path <- convert_path (path)
 
     f <- system.file ("extdata", "readthedocs.yaml",
-                      package = "r2readthedocs",
-                      mustWork = TRUE)
+        package = "r2readthedocs",
+        mustWork = TRUE
+    )
 
     out <- file.path (path, ".readthedocs.yaml")
     file.copy (f, out)
 
     rb <- file.path (path, ".Rbuildignore")
     x <- NULL
-    if (file.exists (rb))
+    if (file.exists (rb)) {
         x <- brio::read_lines (rb)
+    }
     if (!any (grepl ("^\\.readthedocs\\.yaml", x))) {
 
-        x <- c (x,
-                ".readthedocs.yaml")
+        x <- c (
+            x,
+            ".readthedocs.yaml"
+        )
         brio::write_lines (x, rb)
     }
 
@@ -34,16 +37,19 @@ readthedocs_yaml <- function (path = ".") {
 #' @noRd
 readthedocs_file <- function (path = ".", filename = NULL) {
 
-    if (is.null (filename))
+    if (is.null (filename)) {
         stop ("filename must be specified")
+    }
 
     path <- file.path (path, "docs")
-    if (!dir.exists (path))
+    if (!dir.exists (path)) {
         dir.create (path, recursive = TRUE)
+    }
 
     f <- system.file ("extdata", filename,
-                      package = "r2readthedocs",
-                      mustWork = TRUE)
+        package = "r2readthedocs",
+        mustWork = TRUE
+    )
 
     out <- file.path (path, filename)
     file.copy (f, out)
