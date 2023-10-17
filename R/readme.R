@@ -1,4 +1,3 @@
-
 #' Convert main readme to `readthedocs` file.
 #'
 #' @return Name of 'README' file in the `docs` folder, after renaming to the
@@ -11,9 +10,12 @@ convert_readme <- function (path = ".") {
     orig <- file.path (path, "README.md")
     if (!file.exists (orig)) {
         msg <- paste0 ("file [", orig, "] not found")
-        if (file.exists (file.path (path, "README.Rmd")))
-            msg <- paste0 (msg, "\nPlease render README.Rmd -> ",
-                           "README.md before proceeding")
+        if (file.exists (file.path (path, "README.Rmd"))) {
+            msg <- paste0 (
+                msg, "\nPlease render README.Rmd -> ",
+                "README.md before proceeding"
+            )
+        }
         stop (msg)
     }
 
@@ -48,13 +50,15 @@ move_hex <- function (x, path) {
         fig_src_name <- strsplit (fig_src_name, "\\s") [[1]] [1]
 
         static_dir <- file.path (path, "docs", "_static")
-        if (!dir.exists (static_dir))
+        if (!dir.exists (static_dir)) {
             dir.create (static_dir, recursive = TRUE)
+        }
         dir_dest <- file.path (static_dir, pkg_name (path))
         fig_dest <- file.path (dir_dest, fig_src_name)
         if (!file.exists (fig_dest)) {
-            if (!dir.exists (dir_dest))
+            if (!dir.exists (dir_dest)) {
                 dir.create (dir_dest, recursive = TRUE)
+            }
             chk <- file.copy (file.path (path, pkg_name (path), fig_src), fig_dest)
         }
         fig_dest <- normalizePath (fig_dest)
@@ -63,10 +67,12 @@ move_hex <- function (x, path) {
         fig_rel <- gsub (paste0 ("^", .Platform$file.sep), "", fig_rel)
         tmp <- gsub (fig_src_name, fig_rel, x [1])
         tmp <- strsplit (tmp, "<img src") [[1]]
-        x <- c (tmp [1],
-                "",
-                paste0 ("<img src", tmp [2]),
-                x [2:length (x)])
+        x <- c (
+            tmp [1],
+            "",
+            paste0 ("<img src", tmp [2]),
+            x [2:length (x)]
+        )
     }
 
     return (x)
