@@ -7,9 +7,12 @@
 rtd_build <- function (path = ".", dev = FALSE) {
 
     docs_path <- file.path (convert_path (path), "docs")
-    if (!file.exists (docs_path))
-        stop ("path must have a 'docs' directory; ",
-              "try running 'r2readthedocs' first")
+    if (!file.exists (docs_path)) {
+        stop (
+            "path must have a 'docs' directory; ",
+            "try running 'r2readthedocs' first"
+        )
+    }
 
     if (dev) {
         rm_pkg_deps (path) # to enable clean updates
@@ -18,8 +21,10 @@ rtd_build <- function (path = ".", dev = FALSE) {
         rm_pkg_deps (path)
     }
 
-    withr::with_dir (docs_path,
-                     system2 ("make", "html"))
+    withr::with_dir (
+        docs_path,
+        system2 ("make", "html")
+    )
 }
 
 
@@ -38,8 +43,10 @@ rtd_clean <- function (path = ".", full = FALSE) {
 
     if (dir.exists (path_docs)) {
 
-        ret <- withr::with_dir (path_docs,
-                                system2 ("make", args = "clean"))
+        ret <- withr::with_dir (
+            path_docs,
+            system2 ("make", args = "clean")
+        )
 
         if (full) {
 
@@ -48,22 +55,28 @@ rtd_clean <- function (path = ".", full = FALSE) {
 
             # match to man and vignettes directories
             r_dirs <- c ("man", "vignettes")
-            r_files <- lapply (r_dirs, function (i)
-                               list.files (file.path (path, i),
-                                           recursive = TRUE))
+            r_files <- lapply (r_dirs, function (i) {
+                list.files (file.path (path, i),
+                    recursive = TRUE
+                )
+            })
             r_files <- grep ("\\.Rd$|\\.Rmd$|\\.md$",
-                             unlist (r_files),
-                             value = TRUE)
-            r_files <- vapply (strsplit (r_files, "\\."),
-                               function (i) i [1L],
-                               character (1))
+                unlist (r_files),
+                value = TRUE
+            )
+            r_files <- vapply (
+                strsplit (r_files, "\\."),
+                function (i) i [1L],
+                character (1)
+            )
             r_files <- paste0 (r_files, collapse = "|")
 
             # Then only unlink corresponding auto-generated dirs, while
             # retaining all others
             for (d in dirs) {
-                if (all (grep (r_files, list.files (d))))
+                if (all (grep (r_files, list.files (d)))) {
                     chk <- unlink (d, recursive = TRUE)
+                }
             }
         }
     }
@@ -81,9 +94,12 @@ rtd_open <- function (path = ".") {
 
     path_html <- file.path (path, "docs", "_build", "html")
 
-    if (!dir.exists (path_html))
+    if (!dir.exists (path_html)) {
         stop ("html pages do not exist; try running 'rtd_build' first")
+    }
 
-    withr::with_dir (path_html,
-                     utils::browseURL ("index.html"))
+    withr::with_dir (
+        path_html,
+        utils::browseURL ("index.html")
+    )
 }

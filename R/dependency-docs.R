@@ -1,4 +1,3 @@
-
 #' Add documentation of all dependency packages
 #' @noRd
 add_pkg_deps <- function (path = here::here ()) {
@@ -11,8 +10,10 @@ add_pkg_deps <- function (path = here::here ()) {
         return ()
     }
 
-    dep_dir <- normalizePath (file.path (path, "docs", "dependencies"),
-                              mustWork = FALSE)
+    dep_dir <- normalizePath (
+        file.path (path, "docs", "dependencies"),
+        mustWork = FALSE
+    )
     if (!dir.exists (dep_dir)) {
         dir.create (dep_dir)
     }
@@ -33,8 +34,10 @@ add_pkg_deps <- function (path = here::here ()) {
     }
 
     index <- add_deps_to_main_index_rst (path, imps)
-    brio::write_lines (index,
-                       file.path (path, "docs", "index.rst"))
+    brio::write_lines (
+        index,
+        file.path (path, "docs", "index.rst")
+    )
 }
 
 add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
@@ -79,11 +82,13 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
         "   :maxdepth: 1",
         "   :caption: Functions",
         "",
-        paste0 ("   ",
-                pkg,
-                "/",
-                rd_titles,
-                ".md"),
+        paste0 (
+            "   ",
+            pkg,
+            "/",
+            rd_titles,
+            ".md"
+        ),
         ""
     )
 
@@ -106,11 +111,13 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
             "   :maxdepth: 1",
             "   :caption: Vignettes",
             "",
-            paste0 ("   ",
-                    pkg,
-                    "/",
-                    data.frame (v$results)$Item,
-                    ".md"),
+            paste0 (
+                "   ",
+                pkg,
+                "/",
+                data.frame (v$results)$Item,
+                ".md"
+            ),
             ""
         )
     }
@@ -119,13 +126,17 @@ add_pkg_to_deps_index_rst <- function (path, pkg, rd) {
     index_file <- file.path (dep_dir, "index.rst")
     index_contents <- NULL
     if (file.exists (index_file)) {
-        index_contents <- c (brio::read_lines (index_file),
-                             "",
-                             "-----",
-                             "")
+        index_contents <- c (
+            brio::read_lines (index_file),
+            "",
+            "-----",
+            ""
+        )
     }
-    brio::write_lines (c (index_contents, pkg_index),
-                       index_file)
+    brio::write_lines (
+        c (index_contents, pkg_index),
+        index_file
+    )
 
     return (data.frame (v$results))
 }
@@ -137,10 +148,12 @@ compile_vignettes <- function (path, pkg, vignettes) {
 
     for (i in seq (nrow (vignettes))) {
 
-        v_file <- file.path (vignettes$LibPath [i],
-                             vignettes$Package [i],
-                             "doc",
-                             paste0 (vignettes$Item [i], ".Rmd"))
+        v_file <- file.path (
+            vignettes$LibPath [i],
+            vignettes$Package [i],
+            "doc",
+            paste0 (vignettes$Item [i], ".Rmd")
+        )
         if (!file.exists (v_file)) {
             next
         }
@@ -160,10 +173,12 @@ compile_vignettes <- function (path, pkg, vignettes) {
 
         f_md <- tryCatch (
             rmarkdown::render (ftmp,
-                               output_format = fmt,
-                               envir = new.env (),
-                               quiet = TRUE),
-            error = function (e) NULL)
+                output_format = fmt,
+                envir = new.env (),
+                quiet = TRUE
+            ),
+            error = function (e) NULL
+        )
 
         file.remove (ftmp)
 
@@ -174,12 +189,15 @@ compile_vignettes <- function (path, pkg, vignettes) {
         contents <- c (
             paste0 ("# ", titles [i]),
             "",
-            brio::read_lines (f_md))
-        f_md_here <- file.path (path,
-                                "docs",
-                                "dependencies",
-                                pkg,
-                                basename (f_md))
+            brio::read_lines (f_md)
+        )
+        f_md_here <- file.path (
+            path,
+            "docs",
+            "dependencies",
+            pkg,
+            basename (f_md)
+        )
         brio::write_lines (contents, f_md_here)
 
         file.remove (f_md)
@@ -216,15 +234,17 @@ add_deps_to_main_index_rst <- function (path, dep_pkgs) {
         index <- index [-index_end]
     }
 
-    c (index,
-       "",
-       ".. toctree::",
-       "   :maxdepth: 1",
-       "   :caption: Dependencies",
-       "",
-       "   dependencies/index",
-       "",
-       end_txt)
+    c (
+        index,
+        "",
+        ".. toctree::",
+        "   :maxdepth: 1",
+        "   :caption: Dependencies",
+        "",
+        "   dependencies/index",
+        "",
+        end_txt
+    )
 }
 
 
@@ -234,7 +254,8 @@ add_dep_fns <- function (path, pkg, rd) {
 
     fout <- tempfile (fileext = ".md")
     dep_dir <- normalizePath (file.path (path, "docs", "dependencies"),
-                              mustWork = FALSE)
+        mustWork = FALSE
+    )
     pkg_dir <- file.path (dep_dir, pkg)
 
     for (n in names (rd)) {
@@ -244,13 +265,19 @@ add_dep_fns <- function (path, pkg, rd) {
         md <- brio::read_lines (fout)
 
         # insert MyST link target:
-        md <- c (paste0 ("(", pkg, "_", n, ")="),
-                 "",
-                 md)
+        md <- c (
+            paste0 ("(", pkg, "_", n, ")="),
+            "",
+            md
+        )
 
-        mdout <- file.path (pkg_dir,
-                            paste0 (tools::file_path_sans_ext (n),
-                                    ".md"))
+        mdout <- file.path (
+            pkg_dir,
+            paste0 (
+                tools::file_path_sans_ext (n),
+                ".md"
+            )
+        )
 
         # finally, remove local markdown hyperlinks automatically inserted by
         # `Rd2md`:
