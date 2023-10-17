@@ -1,8 +1,8 @@
-
 convert_path <- function (path = ".") {
 
-    if (path == ".")
+    if (path == ".") {
         path <- here::here ()
+    }
     path <- normalizePath (path)
 
     return (path)
@@ -13,8 +13,9 @@ pkg_name <- function (path = ".") {
     path <- convert_path (path)
 
     d <- file.path (path, "DESCRIPTION")
-    if (!file.exists (d))
+    if (!file.exists (d)) {
         stop ("'DESCRIPTION' file not found")
+    }
     d <- read.dcf (d)
     return (unname (d [1, "Package"]))
 }
@@ -23,8 +24,9 @@ pkg_authors <- function (path = ".") {
 
     path <- convert_path (path)
     d <- file.path (path, "DESCRIPTION")
-    if (!file.exists (d))
+    if (!file.exists (d)) {
         stop ("'DESCRIPTION' file not found")
+    }
 
     aut <- desc::desc_get_authors (path)
     roles <- regmatches (aut, gregexpr ("\\[.*\\]", aut))
@@ -41,8 +43,9 @@ rignore_amend <- function (path = ".") {
 
     x <- NULL
     rb <- file.path (path, ".Rbuildignore")
-    if (file.exists (rb))
+    if (file.exists (rb)) {
         x <- brio::read_lines (rb)
+    }
 
     update <- FALSE
     if (!any (grepl ("^\\^docs(\\/?)", x))) {
@@ -54,6 +57,7 @@ rignore_amend <- function (path = ".") {
         x <- c (x, "^\\.readthedocs.yaml")
     }
 
-    if (update)
+    if (update) {
         brio::write_lines (x, rb)
+    }
 }
