@@ -1,6 +1,6 @@
 Package: r2readthedocs
 Title: Convert R Package Documentation to a 'readthedocs' Website
-Version: 0.0.1.027
+Version: 0.0.1.028
 Authors@R: 
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"))
 Description: Convert R package documentation to a 'readthedocs' website.

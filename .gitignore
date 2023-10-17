@@ -18,4 +18,5 @@ aaa\.Rmd*
 *.so
 docs
 inst/bin
+inst/WORDLIST
 windows
