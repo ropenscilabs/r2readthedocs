@@ -146,7 +146,7 @@ compile_vignettes <- function (path, pkg, vignettes) {
     fmt <- rmarkdown::md_document (variant = "gfm")
     titles <- gsub ("\\s\\(source,\\shtml\\)", "", vignettes$Title)
 
-    for (i in seq (nrow (vignettes))) {
+    for (i in seq_len (nrow (vignettes))) {
 
         v_file <- file.path (
             vignettes$LibPath [i],

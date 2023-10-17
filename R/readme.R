@@ -59,7 +59,10 @@ move_hex <- function (x, path) {
             if (!dir.exists (dir_dest)) {
                 dir.create (dir_dest, recursive = TRUE)
             }
-            chk <- file.copy (file.path (path, pkg_name (path), fig_src), fig_dest)
+            chk <- file.copy (
+                file.path (path, pkg_name (path), fig_src),
+                fig_dest
+            )
         }
         fig_dest <- normalizePath (fig_dest)
 
