@@ -1,4 +1,3 @@
-
 #' Convert all files in `man` directory to markdown files
 #'
 #' The converted `.md` files are placed in `./docs/functions`. Index entries for
@@ -11,12 +10,14 @@ convert_man <- function (path = ".") {
 
     docs <- file.path (path, "docs")
     fns_dir <- file.path (docs, "functions")
-    if (!dir.exists (fns_dir))
+    if (!dir.exists (fns_dir)) {
         chk <- dir.create (fns_dir, recursive = TRUE)
+    }
 
     flist <- list.files (file.path (path, "man"),
-                         full.names = TRUE,
-                         pattern = "\\.Rd$")
+        full.names = TRUE,
+        pattern = "\\.Rd$"
+    )
 
     for (f in flist) {
 
