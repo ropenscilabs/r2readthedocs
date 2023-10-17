@@ -11,10 +11,12 @@ r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
     path <- convert_path (path)
 
     if (dir.exists (file.path (path, "docs"))) {
-        stop ("'docs' directory already exists; please remove ",
-              "before calling this function, or use ",
-              "'rtd_build()' to rebuild current site",
-              call. = FALSE)
+        stop (
+            "'docs' directory already exists; please remove ",
+            "before calling this function, or use ",
+            "'rtd_build()' to rebuild current site",
+            call. = FALSE
+        )
     }
 
     readthedocs_yaml (path)
@@ -40,8 +42,9 @@ r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
     edit_conf_py (path)
 
     static_dir <- file.path (path, "docs", "_static")
-    if (!dir.exists (static_dir))
+    if (!dir.exists (static_dir)) {
         dir.create (static_dir)
+    }
 
     if (dev) {
         rm_pkg_deps (path) # to enable clean updates
@@ -67,16 +70,19 @@ r2readthedocs <- function (path = here::here (), dev = FALSE, open = TRUE) {
 extend_index_rst <- function (path, readme) {
 
     index <- file.path (path, "docs", "index.rst")
-    if (!file.exists (index))
+    if (!file.exists (index)) {
         stop ("File [", index, "] not found")
+    }
 
-    x <- c (brio::read_lines (index),
-            "",
-            paste0 ("   ", readme),
-            "",
-            "",
-            add_index_section (path, "vignettes"),
-            add_index_section (path, "functions"))
+    x <- c (
+        brio::read_lines (index),
+        "",
+        paste0 ("   ", readme),
+        "",
+        "",
+        add_index_section (path, "vignettes"),
+        add_index_section (path, "functions")
+    )
 
     brio::write_lines (x, index)
 }
@@ -84,23 +90,28 @@ extend_index_rst <- function (path, readme) {
 add_index_section <- function (path, type = "functions") {
 
     the_dir <- file.path (path, "docs", type)
-    if (!dir.exists (the_dir))
+    if (!dir.exists (the_dir)) {
         return (NULL)
+    }
 
     type_cap <- type
     substring (type_cap, 1, 1) <- toupper (substring (type_cap, 1, 1))
 
-    x <- c ("",
-            "",
-            ".. toctree::",
-            "   :maxdepth: 1",
-            paste0 ("   :caption: ", type_cap),
-            "")
+    x <- c (
+        "",
+        "",
+        ".. toctree::",
+        "   :maxdepth: 1",
+        paste0 ("   :caption: ", type_cap),
+        ""
+    )
 
     for (f in list.files (the_dir)) {
 
-        x <- c (x,
-                paste0 ("   ", type, .Platform$file.sep, f))
+        x <- c (
+            x,
+            paste0 ("   ", type, .Platform$file.sep, f)
+        )
     }
 
     return (x)
@@ -110,8 +121,9 @@ edit_conf_py <- function (path) {
 
     path_docs <- file.path (path, "docs")
     conf_py <- file.path (path_docs, "conf.py")
-    if (!file.exists (conf_py))
+    if (!file.exists (conf_py)) {
         stop ("No conf.py file found at [", path_docs, "]")
+    }
 
     x <- brio::read_lines (conf_py)
 
@@ -119,16 +131,20 @@ edit_conf_py <- function (path) {
     x [i] <- paste0 ("project = '", pkg_name (path), "'")
 
     i <- grep ("copyright = \'<year>", x)
-    x [i] <- paste0 ("copyright = '",
-                     format (Sys.Date (), "%Y"),
-                     ", ",
-                     paste0 (pkg_authors (path), collapse = ", "),
-                     "'")
+    x [i] <- paste0 (
+        "copyright = '",
+        format (Sys.Date (), "%Y"),
+        ", ",
+        paste0 (pkg_authors (path), collapse = ", "),
+        "'"
+    )
 
     i <- grep ("author = \'My Name\'", x)
-    x [i] <- paste0 ("author = '",
-                     paste0 (pkg_authors (path), collapse = ", "),
-                     "'")
+    x [i] <- paste0 (
+        "author = '",
+        paste0 (pkg_authors (path), collapse = ", "),
+        "'"
+    )
 
     brio::write_lines (x, conf_py)
 }
