@@ -1,6 +1,6 @@
 Package: r2readthedocs
 Title: Convert R Package Documentation to a 'readthedocs' Website
-Version: 0.0.1.048
+Version: 0.0.1.049
 Authors@R: 
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"))
 Description: Convert R package documentation to a 'readthedocs' website.
@@ -16,6 +16,8 @@ Imports:
 Suggests: 
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes:
+    quantsch/Rd2md
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

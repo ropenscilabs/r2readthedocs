@@ -261,7 +261,7 @@ add_dep_fns <- function (path, pkg, rd) {
     for (n in names (rd)) {
 
         out <- NULL # rm unused variable note
-        out <- Rd2md::Rd2markdown (rd [[n]], outfile = fout)
+        out <- Rd2md::as_markdown (rd [[n]], outfile = fout)
         md <- brio::read_lines (fout)
 
         # insert MyST link target:

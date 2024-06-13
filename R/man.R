@@ -23,6 +23,6 @@ convert_man <- function (path = ".") {
 
         fshort <- utils::tail (strsplit (f, .Platform$file.sep) [[1]], 1L)
         fout <- file.path (fns_dir, gsub ("\\.Rd$", ".md", fshort))
-        Rd2md::Rd2markdown (f, outfile = fout)
+        Rd2md::as_markdown (f, outfile = fout)
     }
 }
