@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/ropenscilabs/r2readthedocs",
   "issueTracker": "https://github.com/ropenscilabs/r2readthedocs/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.1.049",
+  "version": "0.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.3 (2022-03-10)",
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
   "author": [
     {
       "@type": "Person",
@@ -104,7 +104,7 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=Rd2md"
+      "sameAs": "https://github.com/quantsch/Rd2md"
     },
     "5": {
       "@type": "SoftwareApplication",
@@ -118,13 +118,10 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "47.767KB",
+  "fileSize": "52.94KB",
   "readme": "https://github.com/ropenscilabs/r2readthedocs/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/ropenscilabs/r2readthedocs/actions",
-    "https://codecov.io/gh/ropenscilabs/r2readthedocs"
-  ],
+  "contIntegration": ["https://github.com/ropenscilabs/r2readthedocs/actions", "https://github.com/ropenscilabs/r2readthedocs/actions?query=workflow%3Apkgcheck", "https://codecov.io/gh/ropenscilabs/r2readthedocs"],
   "developmentStatus": "https://www.repostatus.org/#concept"
 }
